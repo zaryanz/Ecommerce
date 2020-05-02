@@ -9,14 +9,16 @@ import theme from "../../theme";
 
 const useStyles = makeStyles({
   root: {
-    margin: theme.spacing(4),
+    margin: "0 auto",
+    marginTop: theme.spacing(4),
+    width: "40%",
   },
 });
 
 const AuthCard = (props) => {
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} justify="center">
       <CardContent>{props.children}</CardContent>
     </Card>
   );

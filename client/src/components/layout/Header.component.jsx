@@ -8,13 +8,18 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "../../theme";
 import Register from "../auth/Register.component";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  link: {
+    textDecoration: "none",
+    fontWeight: 400,
+    color: "inherit",
+    outline: "none",
+    margin: theme.spacing(2),
   },
 }));
 
@@ -31,10 +36,23 @@ const Header = () => {
               color="inherit"
               aria-label="menu"
             >
-              <MenuIcon />
+              {/* <MenuIcon /> */}
             </IconButton>
+
+            <Typography variant="h5" color="inherit">
+              <Link to="/" className={classes.link} style={{ fontWeight: 500 }}>
+                Ecommerce
+              </Link>
+            </Typography>
             <Typography variant="h6" color="inherit">
-              Ecommerce
+              <Link to="/Register" className={classes.link}>
+                Register
+              </Link>
+            </Typography>
+            <Typography variant="h6" color="inherit">
+              <Link to="/Login" className={classes.link}>
+                Login
+              </Link>
             </Typography>
           </Toolbar>
         </AppBar>

@@ -18,26 +18,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = () => {
+const Login = () => {
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
       <form className={classes.form} noValidate autoComplete="off">
         <Typography className={classes.root} variant="h4">
-          Register
+          Login
         </Typography>
         <TextField
           className={classes.root}
           id="standard"
-          label="Username"
+          label="Username/Email"
           defaultValue=""
           fullWidth
-        />
-        <TextField
-          className={classes.root}
-          id="standard"
-          label="Email"
-          defaultValue=""
         />
         <br />
         <TextField
@@ -45,13 +39,6 @@ const Register = () => {
           id="standard"
           label="Password"
           defaultValue=""
-        />
-        <TextField
-          className={classes.root}
-          id="standard-password-input"
-          label="Confirm password"
-          type="password"
-          autoComplete="current-password"
         />
         <br />
         <Button variant="contained" color="secondary" className={classes.root}>
@@ -62,4 +49,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
