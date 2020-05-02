@@ -6,7 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { ThemeProvider } from "@material-ui/styles";
-import theme from "../theme";
+import theme from "../../theme";
+import Register from "../auth/Register.component";
 
 const useStyles = makeStyles((theme) => ({
   root: {
