@@ -18,9 +18,6 @@ const AuthCard = (props) => {
   return (
     <Card className={classes.root}>
       <CardContent>{props.children}</CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
     </Card>
   );
 };
