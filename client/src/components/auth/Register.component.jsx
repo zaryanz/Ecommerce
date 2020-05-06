@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import TextField from "@material-ui/core/TextField";
@@ -19,6 +19,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    password_c: "",
+  });
+
+  const { username, email, password, password_c } = formData;
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log(formData);
+    console.log(e.target.name);
+  };
+
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
@@ -30,28 +45,39 @@ const Register = () => {
           className={classes.root}
           id="standard"
           label="Username"
-          defaultValue=""
+          name="username"
+          value={username}
           fullWidth
+          onChange={(e) => handleChange(e)}
         />
         <TextField
           className={classes.root}
           id="standard"
           label="Email"
-          defaultValue=""
+          name="email"
+          value={email}
+          onChange={(e) => handleChange(e)}
         />
         <br />
         <TextField
           className={classes.root}
-          id="standard"
+          id="standard-password-input"
           label="Password"
-          defaultValue=""
+          name="password"
+          type="password"
+          value={password}
+          autoComplete="current-password"
+          onChange={(e) => handleChange(e)}
         />
         <TextField
           className={classes.root}
           id="standard-password-input"
           label="Confirm password"
+          name="password_c"
           type="password"
+          value={password_c}
           autoComplete="current-password"
+          onChange={(e) => handleChange(e)}
         />
         <br />
         <Button variant="contained" color="secondary" className={classes.root}>

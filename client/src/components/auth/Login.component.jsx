@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import TextField from "@material-ui/core/TextField";
@@ -19,6 +19,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const { username, password } = formData;
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
@@ -30,15 +41,21 @@ const Login = () => {
           className={classes.root}
           id="standard"
           label="Username/Email"
+          name="username"
+          value={username}
+          onChange={(e) => handleChange(e)}
           defaultValue=""
           fullWidth
         />
         <br />
         <TextField
           className={classes.root}
-          id="standard"
+          id="standard-password-input"
           label="Password"
-          defaultValue=""
+          name="password"
+          value={password}
+          type="password"
+          onChange={(e) => handleChange(e)}
         />
         <br />
         <Button variant="contained" color="secondary" className={classes.root}>
