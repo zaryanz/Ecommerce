@@ -6,6 +6,10 @@ import theme from "../../theme";
 import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
+import axios from "axios";
+
+import { config } from "../../config";
+
 import AuthCard from "./AuthCard.component";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,10 +38,25 @@ const Register = () => {
     console.log(e.target.name);
   };
 
+  const handleSubmit = (e) => {
+    delete formData["password_c"];
+    console.log(formData, config.SERVER_URL + "/routes/user");
+    const response = axios
+      .post(config.SERVER_URL + "/routes/user", formData)
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error.response));
+    e.preventDefault();
+  };
+
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-      <form className={classes.form} noValidate autoComplete="off">
+      <form
+        className={classes.form}
+        noValidate
+        autoComplete="off"
+        onSubmit={(e) => handleSubmit(e)}
+      >
         <Typography className={classes.root} variant="h4">
           Register
         </Typography>
@@ -80,7 +99,12 @@ const Register = () => {
           onChange={(e) => handleChange(e)}
         />
         <br />
-        <Button variant="contained" color="secondary" className={classes.root}>
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.root}
+          type="submit"
+        >
           Submit
         </Button>
       </form>

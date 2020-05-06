@@ -6,6 +6,8 @@ import theme from "../../theme";
 import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
+import { config } from "../../config";
+
 import AuthCard from "./AuthCard.component";
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
+  console.log(config.SERVER_URL);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -30,10 +33,19 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // const handleSubmit = (e) => {
+  //   axios.post();
+  // };
+
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-      <form className={classes.form} noValidate autoComplete="off">
+      <form
+        className={classes.form}
+        noValidate
+        autoComplete="off"
+        // onSubmit={(e) => handleSubmit(e)}
+      >
         <Typography className={classes.root} variant="h4">
           Login
         </Typography>
