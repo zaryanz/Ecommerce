@@ -5,12 +5,14 @@ const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
 
+const auth = require("../middleware/auth");
+
 /*
 @@ROUTE: GET /routes/user
 @@DESC: get user by token 
 @@ACCESS: private
 */
-router.get("/", (req, res) => {
+router.get("/", auth, (req, res) => {
   res.json({ message: "hello" });
 });
 
@@ -33,7 +35,7 @@ router.post(
   async (req, res) => {
     let errors = validationResult(req);
     const { username, email, password } = req.body;
-    if (!errors.isEmpty()) {
+    if (!errors.isEmpty) {
       console.log({ erorrs: errors.array() });
       res.status(422).send({ errors: errors.array() });
       return;
@@ -47,7 +49,6 @@ router.post(
     if (user) {
       errArr.push("Username is taken");
     }
-    console.log(errArr);
     if (errArr.length !== 0) {
       console.log(errArr);
       res.status(422).send({ errors: errArr });
@@ -64,7 +65,9 @@ router.post(
         id: user.id,
       },
     };
-    const accessToken = jwt.sign(payload, process.env.jwtSecret);
+    const accessToken = jwt.sign(payload, process.env.jwtSecret, {
+      expiresIn: 3600,
+    });
     res.send(accessToken);
   }
 );
