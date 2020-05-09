@@ -1,5 +1,7 @@
 const Router = require("express");
 const router = Router();
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
 
@@ -36,23 +38,34 @@ router.post(
       res.status(422).send({ errors: errors.array() });
       return;
     }
-    let user = User.find({ email });
+    let user = await User.findOne({ email });
     let errArr = [];
     if (user) {
       errArr.push("Email is already in use");
     }
-    user = User.find({ username });
+    user = await User.findOne({ username });
     if (user) {
       errArr.push("Username is taken");
     }
-    if (!errArr.isEmpty) {
+    console.log(errArr);
+    if (errArr.length !== 0) {
       console.log(errArr);
       res.status(422).send({ errors: errArr });
       return;
     }
-    user = new User({ username, email, password });
+    const salt = await bcrypt.genSalt(10);
+    encryptedPass = await bcrypt.hash(password, salt);
+    console.log(encryptedPass);
+    user = new User({ username, email, password: encryptedPass });
     await user.save();
     console.log("User saved");
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
+    const accessToken = jwt.sign(payload, process.env.jwtSecret);
+    res.send(accessToken);
   }
 );
 
