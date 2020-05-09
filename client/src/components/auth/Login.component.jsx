@@ -8,8 +8,6 @@ import Button from "@material-ui/core/Button";
 
 import { config } from "../../config";
 
-import AuthCard from "./AuthCard.component";
-
 const useStyles = makeStyles((theme) => ({
   form: {
     margin: theme.spacing(2),

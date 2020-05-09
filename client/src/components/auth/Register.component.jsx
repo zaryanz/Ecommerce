@@ -10,8 +10,6 @@ import axios from "axios";
 
 import { config } from "../../config";
 
-import AuthCard from "./AuthCard.component";
-
 const useStyles = makeStyles((theme) => ({
   form: {
     margin: theme.spacing(2),
@@ -44,7 +42,7 @@ const Register = () => {
     const response = axios
       .post(config.SERVER_URL + "/routes/user", formData)
       .then((res) => console.log(res))
-      .catch((error) => console.log(error.response));
+      .catch((error) => console.log(error.response.data.errors));
     e.preventDefault();
   };
 

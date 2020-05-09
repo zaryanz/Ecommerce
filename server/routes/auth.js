@@ -1,6 +1,7 @@
 const Router = require("express");
 const router = Router();
 const { check, validationResult } = require("express-validator");
+const User = require("../models/User");
 
 /*
 @@ROUTE: GET /routes/user
@@ -27,14 +28,31 @@ router.post(
       min: 6,
     }),
   ],
-  (req, res) => {
-    const errors = validationResult(req);
+  async (req, res) => {
+    let errors = validationResult(req);
+    const { username, email, password } = req.body;
     if (!errors.isEmpty()) {
       console.log({ erorrs: errors.array() });
       res.status(422).send({ errors: errors.array() });
       return;
     }
-    res.json({ message: "No errors" });
+    let user = User.find({ email });
+    let errArr = [];
+    if (user) {
+      errArr.push("Email is already in use");
+    }
+    user = User.find({ username });
+    if (user) {
+      errArr.push("Username is taken");
+    }
+    if (!errArr.isEmpty) {
+      console.log(errArr);
+      res.status(422).send({ errors: errArr });
+      return;
+    }
+    user = new User({ username, email, password });
+    await user.save();
+    console.log("User saved");
   }
 );
 
