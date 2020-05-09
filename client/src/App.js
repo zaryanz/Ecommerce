@@ -24,6 +24,12 @@ const LoginRoute = () => (
   </AuthCard>
 );
 
+const CartRoute = () => (
+  <AuthCard>
+    <h1>Cart</h1>
+  </AuthCard>
+);
+
 const App = () => {
   return (
     <Router>
@@ -33,6 +39,7 @@ const App = () => {
         <Switch>
           <Route exact path="/Register" component={RegisterRoute} />
           <Route exact path="/Login" component={LoginRoute} />
+          <Route exact path="/Cart" component={CartRoute} />
         </Switch>
       </Fragment>
     </Router>

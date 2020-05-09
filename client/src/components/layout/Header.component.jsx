@@ -10,6 +10,8 @@ import theme from "../../theme";
 import Register from "../auth/Register.component";
 import { Link } from "react-router-dom";
 
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -20,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     color: "inherit",
     outline: "none",
     margin: theme.spacing(2),
+  },
+  cart: {
+    margin: theme.spacing(1, "auto", "auto", "auto"),
   },
 }));
 
@@ -54,6 +59,9 @@ const Header = () => {
                 Login
               </Link>
             </Typography>
+            <Link to="/Cart" className={classes.link} justify="space-between">
+              <ShoppingCartIcon></ShoppingCartIcon>
+            </Link>
           </Toolbar>
         </AppBar>
       </ThemeProvider>

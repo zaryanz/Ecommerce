@@ -9,11 +9,13 @@ const auth = require("../middleware/auth");
 
 /*
 @@ROUTE: GET /routes/user
-@@DESC: get user by token 
+@@DESC: get user by token
 @@ACCESS: private
 */
-router.get("/", auth, (req, res) => {
-  res.json({ message: "hello" });
+router.get("/", auth, async (req, res) => {
+  console.log(req.user);
+  const user = await User.findById(req.user.id);
+  res.send(user);
 });
 
 /*
