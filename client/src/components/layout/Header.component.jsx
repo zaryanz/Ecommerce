@@ -59,9 +59,11 @@ const Header = () => {
                 Login
               </Link>
             </Typography>
-            <Link to="/Cart" className={classes.link} justify="space-between">
-              <ShoppingCartIcon></ShoppingCartIcon>
-            </Link>
+            <div style={{ marginLeft: "auto", marginRight: "1em" }}>
+              <Link to="/Cart" className={classes.link}>
+                <ShoppingCartIcon></ShoppingCartIcon>
+              </Link>
+            </div>
           </Toolbar>
         </AppBar>
       </ThemeProvider>

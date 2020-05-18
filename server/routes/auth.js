@@ -14,17 +14,17 @@ const auth = require("../middleware/auth");
 */
 router.get("/", auth, async (req, res) => {
   console.log(req.user);
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user.id, "-password");
   res.send(user);
 });
 
 /*
-@@ROUTE: POST /routes/user
+@@ROUTE: POST /routes/user/register
 @@DESC: create new user
 @@ACCESS: public
 */
 router.post(
-  "/",
+  "/register",
   [
     check("username", "Username must be minimum 5 characters").isLength({
       min: 5,
@@ -36,8 +36,9 @@ router.post(
   ],
   async (req, res) => {
     let errors = validationResult(req);
+    console.log(errors);
     const { username, email, password } = req.body;
-    if (!errors.isEmpty) {
+    if (errors.errors.length !== 0) {
       console.log({ erorrs: errors.array() });
       res.status(422).send({ errors: errors.array() });
       return;
@@ -73,5 +74,34 @@ router.post(
     res.send(accessToken);
   }
 );
+
+/*
+@@ROUTE: POST /routes/user/login
+@@DESC: authenticate user and get token
+@@ACCESS: public
+*/
+router.post("/login", async (req, res) => {
+  const data = req.body;
+  let user = await User.findOne({ username: data.username });
+  if (user === null) {
+    user = await User.findOne({ email: data.username });
+  }
+  if (user === null) {
+    res.status(400).send({ message: "User not found" });
+  }
+  const passIsCorrect = await bcrypt.compare(data.password, user.password);
+  console.log(passIsCorrect);
+  if (passIsCorrect) {
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
+    const accessToken = jwt.sign(payload, process.env.jwtSecret, {
+      expiresIn: 3600,
+    });
+    res.send(accessToken);
+  }
+});
 
 module.exports = router;

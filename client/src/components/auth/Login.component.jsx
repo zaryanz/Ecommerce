@@ -8,6 +8,8 @@ import Button from "@material-ui/core/Button";
 
 import { config } from "../../config";
 
+import axios from "axios";
+
 const useStyles = makeStyles((theme) => ({
   form: {
     margin: theme.spacing(2),
@@ -31,9 +33,19 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // const handleSubmit = (e) => {
-  //   axios.post();
-  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData, config.SERVER_URL + "/routes/user/login");
+    try {
+      const response = await axios.post(
+        config.SERVER_URL + "/routes/user/login",
+        formData
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
 
   const classes = useStyles();
   return (
@@ -42,7 +54,7 @@ const Login = () => {
         className={classes.form}
         noValidate
         autoComplete="off"
-        // onSubmit={(e) => handleSubmit(e)}
+        onSubmit={(e) => handleSubmit(e)}
       >
         <Typography className={classes.root} variant="h4">
           Login
@@ -68,7 +80,12 @@ const Login = () => {
           onChange={(e) => handleChange(e)}
         />
         <br />
-        <Button variant="contained" color="secondary" className={classes.root}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="secondary"
+          className={classes.root}
+        >
           Submit
         </Button>
       </form>

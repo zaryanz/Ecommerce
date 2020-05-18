@@ -38,11 +38,11 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     delete formData["password_c"];
-    console.log(formData, config.SERVER_URL + "/routes/user");
+    console.log(formData, config.SERVER_URL + "/routes/user/register");
     const response = axios
-      .post(config.SERVER_URL + "/routes/user", formData)
+      .post(config.SERVER_URL + "/routes/user/register", formData)
       .then((res) => console.log(res))
-      .catch((error) => console.log(error.response.data.errors));
+      .catch((error) => console.log(error.response));
     e.preventDefault();
   };
 
