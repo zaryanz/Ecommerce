@@ -3,7 +3,9 @@ const router = Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
+
 const User = require("../models/User");
+const Cart = require("../models/Cart");
 
 const auth = require("../middleware/auth");
 
@@ -71,6 +73,9 @@ router.post(
     const accessToken = jwt.sign(payload, process.env.jwtSecret, {
       expiresIn: 3600,
     });
+    cart = new Cart({ user: user.id });
+    await cart.save();
+    console.log("Cart created");
     res.send(accessToken);
   }
 );
