@@ -5,16 +5,11 @@ import Header from "./components/layout/Header.component";
 import Register from "./components/auth/Register.component.jsx";
 import Login from "./components/auth/Login.component.jsx";
 import AuthCard from "./components/auth/AuthCard.component.jsx";
+import Homepage from "./components/layout/Homepage.component";
 
 const RegisterRoute = () => (
   <AuthCard>
     <Register />
-  </AuthCard>
-);
-
-const Landing = () => (
-  <AuthCard>
-    <h1>Welcome to Ecommerce</h1>
   </AuthCard>
 );
 
@@ -35,7 +30,7 @@ const App = () => {
     <Router>
       <Fragment>
         <Header />
-        <Route exact path="/" component={Landing} />
+        <Route exact path="/" component={Homepage} />
         <Switch>
           <Route exact path="/Register" component={RegisterRoute} />
           <Route exact path="/Login" component={LoginRoute} />
