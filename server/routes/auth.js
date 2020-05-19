@@ -88,9 +88,9 @@ router.post("/login", async (req, res) => {
   }
   if (user === null) {
     res.status(400).send({ message: "User not found" });
+    return;
   }
   const passIsCorrect = await bcrypt.compare(data.password, user.password);
-  console.log(passIsCorrect);
   if (passIsCorrect) {
     const payload = {
       user: {
@@ -101,6 +101,10 @@ router.post("/login", async (req, res) => {
       expiresIn: 3600,
     });
     res.send(accessToken);
+    return;
+  } else {
+    res.status(401).send({ message: "Incorrect username/password" });
+    return;
   }
 });
 
